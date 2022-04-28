@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tyche.API", "Tyche.API\Tyche.API.csproj", "{CA51C46F-9231-4BFB-95CC-81029B59B257}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tyche.Domain", "Tyche.Domain\Tyche.Domain.csproj", "{6015371B-17B5-4714-BD4C-2FB70A646DC1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tyche.BusinessLogic", "Tyche.BusinessLogic\Tyche.BusinessLogic.csproj", "{5FC62F53-A220-4483-A965-12B214712FF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tyche.DataAccess.Postgres", "Tyche.DataAccess.Postgres\Tyche.DataAccess.Postgres.csproj", "{67AB4D45-4003-42C5-99DA-CD7361ECCB58}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tyche.UnitTests", "Tyche.UnitTests\Tyche.UnitTests.csproj", "{80151682-6D95-4A4F-8D30-C370E9FEC971}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tyche.IntegrationTests", "Tyche.IntegrationTests\Tyche.IntegrationTests.csproj", "{45CEE789-234D-4ED9-A11C-8876D4C5DDB5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CA51C46F-9231-4BFB-95CC-81029B59B257}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA51C46F-9231-4BFB-95CC-81029B59B257}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA51C46F-9231-4BFB-95CC-81029B59B257}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA51C46F-9231-4BFB-95CC-81029B59B257}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6015371B-17B5-4714-BD4C-2FB70A646DC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6015371B-17B5-4714-BD4C-2FB70A646DC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6015371B-17B5-4714-BD4C-2FB70A646DC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6015371B-17B5-4714-BD4C-2FB70A646DC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FC62F53-A220-4483-A965-12B214712FF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FC62F53-A220-4483-A965-12B214712FF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FC62F53-A220-4483-A965-12B214712FF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FC62F53-A220-4483-A965-12B214712FF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67AB4D45-4003-42C5-99DA-CD7361ECCB58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67AB4D45-4003-42C5-99DA-CD7361ECCB58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67AB4D45-4003-42C5-99DA-CD7361ECCB58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67AB4D45-4003-42C5-99DA-CD7361ECCB58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80151682-6D95-4A4F-8D30-C370E9FEC971}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80151682-6D95-4A4F-8D30-C370E9FEC971}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80151682-6D95-4A4F-8D30-C370E9FEC971}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80151682-6D95-4A4F-8D30-C370E9FEC971}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45CEE789-234D-4ED9-A11C-8876D4C5DDB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45CEE789-234D-4ED9-A11C-8876D4C5DDB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45CEE789-234D-4ED9-A11C-8876D4C5DDB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45CEE789-234D-4ED9-A11C-8876D4C5DDB5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7898978C-6A4E-4284-AA97-4C5301B2860C}
+	EndGlobalSection
+EndGlobal
