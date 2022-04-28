@@ -8,4 +8,13 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Tyche.BusinessLogic\Tyche.BusinessLogic.csproj" />
+    <ProjectReference Include="..\Tyche.DataAccess.Postgres\Tyche.DataAccess.Postgres.csproj" />
+  </ItemGroup>
+
 </Project>
