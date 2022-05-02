@@ -9,12 +9,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\Tyche.BusinessLogic\Tyche.BusinessLogic.csproj" />
+    <ProjectReference Include="..\Tyche.DataAccess.Postgres\Tyche.DataAccess.MsSql.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Tyche.BusinessLogic\Tyche.BusinessLogic.csproj" />
-    <ProjectReference Include="..\Tyche.DataAccess.Postgres\Tyche.DataAccess.Postgres.csproj" />
+    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>

@@ -11,6 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Tyche.BusinessLogic.Services;
+using Tyche.Domain.Interfaces;
 
 namespace Tyche.API
 {
@@ -28,6 +30,9 @@ namespace Tyche.API
         {
 
             services.AddControllers();
+
+            services.AddScoped<IDeckService, DeckService>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Tyche.API", Version = "v1" });
