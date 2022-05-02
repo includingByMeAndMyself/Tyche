@@ -5,16 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.16">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Tyche.BusinessLogic\Tyche.BusinessLogic.csproj" />
-    <ProjectReference Include="..\Tyche.DataAccess.Postgres\Tyche.DataAccess.MsSql.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\" />
+    <ProjectReference Include="..\Tyche.DataAccess.MsSql\Tyche.DataAccess.MsSql.csproj" />
   </ItemGroup>
 
 </Project>

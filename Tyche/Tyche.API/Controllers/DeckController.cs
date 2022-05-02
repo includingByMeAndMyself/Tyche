@@ -18,30 +18,33 @@ namespace Tyche.API.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public ActionResult<string> Create(Suit suit)
+        public IActionResult Create(string suitRequest)
         {
-            if (ModelState.IsValid == false)
-                return BadRequest();
+            if (Enum.TryParse<Suit>(suitRequest, out var suit))
+            {
+                try
+                {
+                    var response = _deckService.CreateNamedDeck(suit);
+                    return Ok(response);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+            }
 
-            try
-            {
-                var response = _deckService.CreateNamedDeck(suit);
-                return Ok(response);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return BadRequest($"Suit can be only \"Spades\", \"Clubs\", \"Hearts\", \"Diamonds\"; But you try enter suit - \"{suitRequest}\"");
         }
 
-        [HttpGet("{DeckSuit:int}")]
-        public IActionResult Get(int suit)
+        [HttpGet("{suitRequest}")]
+        public ActionResult<Deck> Get(string suitRequest)
         {
-            var response = _deckService.GetNamedDeck(suit);
-            return Ok(response);
+            if (Enum.TryParse<Suit>(suitRequest, out var suit))
+            {
+                var response = _deckService.GetDeckBySuit(suit);
+                return Ok(response);
+            }
+            return BadRequest($"Suit can be only \"Spades\", \"Clubs\", \"Hearts\", \"Diamonds\"; But you try enter suit - \"{suitRequest}\"");
         }
     }
 }
