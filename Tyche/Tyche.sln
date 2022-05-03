@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tyche.IntegrationTests", "T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tyche.DataAccess.MsSql", "Tyche.DataAccess.MsSql\Tyche.DataAccess.MsSql.csproj", "{DF99F54A-0C13-47AC-BF39-06183CD40417}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.CLI", "Client.CLI\Client.CLI.csproj", "{146160C3-F8F7-4A03-A3DE-AD7A396EC808}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{DF99F54A-0C13-47AC-BF39-06183CD40417}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF99F54A-0C13-47AC-BF39-06183CD40417}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF99F54A-0C13-47AC-BF39-06183CD40417}.Release|Any CPU.Build.0 = Release|Any CPU
+		{146160C3-F8F7-4A03-A3DE-AD7A396EC808}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{146160C3-F8F7-4A03-A3DE-AD7A396EC808}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{146160C3-F8F7-4A03-A3DE-AD7A396EC808}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{146160C3-F8F7-4A03-A3DE-AD7A396EC808}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

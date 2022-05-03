@@ -79,7 +79,7 @@ namespace Tyche.API.Controllers
         }
 
         /// <summary>
-        /// Getting a all decks of cards
+        /// Getting all decks of cards
         /// </summary>
         /// <returns></returns>
         [HttpGet("Decks/")]
@@ -101,7 +101,7 @@ namespace Tyche.API.Controllers
         }
 
         /// <summary>
-        /// Deleting a deck of cards by name
+        /// Deleting deck of cards by name
         /// </summary>
         /// <returns></returns>
         [HttpDelete("ByNames/")]

@@ -9,7 +9,7 @@ using Tyche.DataAccess.MsSql.Context;
 namespace Tyche.DataAccess.MsSql.Migrations
 {
     [DbContext(typeof(DeckContext))]
-    [Migration("20220503144457_First")]
+    [Migration("20220503171037_First")]
     partial class First
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
