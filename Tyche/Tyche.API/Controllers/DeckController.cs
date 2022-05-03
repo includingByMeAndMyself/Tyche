@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Tyche.API.Infrastructure;
 using Tyche.API.Models;
 using Tyche.Domain.Interfaces;
@@ -29,11 +30,11 @@ namespace Tyche.API.Controllers
         /// <param Name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Create(DeckRequest request)
+        public async Task<IActionResult> Create(DeckRequest request)
         {
             try
             {
-                var response = _deckService.CreateNamedDeck(request.Name, request.DeckType);
+                var response = await _deckService.CreateNamedDeckAsync(request.Name, request.DeckType);
                 return Ok(response);
             }
             catch (Exception ex)
@@ -48,10 +49,10 @@ namespace Tyche.API.Controllers
         /// <param Name="name"></param>
         /// <returns></returns>
         [HttpGet("{name}")]
-        public ActionResult<DeckResponse> GetDeckByName(string name)
+        public async Task<ActionResult<DeckResponse>>  GetDeckByName(string name)
         {
 
-            var deck = _deckService.GetDeckByName(name);
+            var deck = await _deckService.GetDeckByNameAsync(name);
             if (deck != null)
             {
                 var response = _automapper.MappingToDeckResponse(deck);
@@ -68,9 +69,9 @@ namespace Tyche.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("Names/")]
-        public IActionResult GetNames()
+        public async Task<IActionResult> GetNames()
         {
-            var names = _deckService.GetCreatedDecksNames();
+            var names = await _deckService.GetCreatedDecksNamesAsync();
             if (names.Length != 0)
                 return Ok(names);
             else
@@ -82,9 +83,9 @@ namespace Tyche.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("Decks/")]
-        public ActionResult<DeckResponse[]> GetDecks()
+        public async Task<ActionResult<DeckResponse[]>> GetDecks()
         {
-            var decks = _deckService.GetDecks();
+            var decks = await _deckService.GetDecksAsync();
             if (decks != null)
             {
                 var response = new List<DeckResponse>();
@@ -104,9 +105,9 @@ namespace Tyche.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpDelete("ByNames/")]
-        public IActionResult Delete(string name)
+        public async Task<IActionResult> Delete(string name)
         {
-            var response = _deckService.DeleteDeckByName(name);
+            var response = await _deckService.DeleteDeckByNameAsync(name);
             return Ok(response);
         }
 
@@ -116,9 +117,9 @@ namespace Tyche.API.Controllers
         /// <param Suit="request"></param>
         /// <returns></returns>
         [HttpDelete("Decks/")]
-        public IActionResult Delete()
+        public async Task<IActionResult> Delete()
         {
-            var response = _deckService.DeleteDecks();
+            var response = await _deckService.DeleteDecksAsync();
             return Ok(response);
         }
 
@@ -128,9 +129,9 @@ namespace Tyche.API.Controllers
         /// <param SortOption="request"></param>
         /// <returns></returns>
         [HttpPut("Shuffle/")]
-        public IActionResult Update(ShuffleRequest request)
+        public async Task<IActionResult> Update(ShuffleRequest request)
         {
-            var response = _deckService.ShuffleDeckBySuit(request.SortOption, request.Name);
+            var response = await _deckService.ShuffleDeckByNameAsync(request.SortOption, request.Name);
             return Ok(response);
         }
     }

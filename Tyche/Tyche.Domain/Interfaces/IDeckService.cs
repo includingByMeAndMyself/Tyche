@@ -1,22 +1,23 @@
-﻿using Tyche.Domain.Models;
+﻿using System.Threading.Tasks;
+using Tyche.Domain.Models;
 
 
 namespace Tyche.Domain.Interfaces
 {
     public interface IDeckService
     {
-        string CreateNamedDeck(string name, DeckType deckType);
+        Task<string> CreateNamedDeckAsync(string name, DeckType deckType);
 
-        Deck GetDeckByName(string name);
+        Task<Deck> GetDeckByNameAsync(string name);
 
-        Deck[] GetDecks();
+        Task<Deck[]> GetDecksAsync();
 
-        string[] GetCreatedDecksNames();
+        Task<string[]> GetCreatedDecksNamesAsync();
 
-        string DeleteDeckByName(string name);
+        Task<string> DeleteDeckByNameAsync(string name);
 
-        string ShuffleDeckBySuit(int sortOption, string name);
+        Task<string> ShuffleDeckByNameAsync(int sortOption, string name);
 
-        string DeleteDecks();
+        Task<string> DeleteDecksAsync();
     }
 }

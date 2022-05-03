@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Tyche.DataAccess.MsSql.Context;
 using Tyche.DataAccess.MsSql.Infrastructure;
 using Tyche.Domain.Interfaces;
@@ -19,32 +21,34 @@ namespace Tyche.DataAccess.MsSql.Repository
             _context = context;
         }
 
-        public void Add(Deck deck, string name)
+        public async Task<bool> AddAsync(Deck deck, string name)
         {
-            if (deck == null) return;
+            if (deck == null) return false;
 
-            if (String.IsNullOrWhiteSpace(name)) return;
+            if (String.IsNullOrWhiteSpace(name)) return false;
 
             var deckEntity = _automapper.MappingToDeckEntity(deck, name);
 
-            _context.Add(deckEntity);
-            _context.SaveChanges();
+            await _context.AddAsync(deckEntity);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
 
-        public Deck GetDeck(string name)
+        public async Task<Deck> GetDeckAsync(string name)
         {
-            var deckEntity = _context.Decks.FirstOrDefault(deck => deck.Name == name);
+            var deckEntity = await _context.Decks.FirstOrDefaultAsync(deck => deck.Name == name);
             if (deckEntity == null) return null;
 
-            deckEntity.Deck = _context.Cards.Where(card => card.DeckId == deckEntity.Id).OrderByDescending(card => card.SequenceNumber).ToArray();
+            deckEntity.Deck = await _context.Cards.Where(card => card.DeckId == deckEntity.Id).OrderByDescending(card => card.SequenceNumber).ToArrayAsync();
 
             var deck = _automapper.MappingToDeck(deckEntity, name);
             return deck;
         }
 
-        public string[] GetDecksNames()
+        public async Task<string[]> GetDecksNamesAsync()
         {
-            var decksEntity = _context.Decks.ToList();
+            var decksEntity = await _context.Decks.ToListAsync();
             var decks = new List<string>();
 
             foreach (var deck in decksEntity)
@@ -54,14 +58,14 @@ namespace Tyche.DataAccess.MsSql.Repository
             return decks.ToArray();
         }
 
-        public Deck[] GetDecks()
+        public async Task<Deck[]> GetDecksAsync()
         {
-            var decksEntity = _context.Decks.ToList();
+            var decksEntity = await _context.Decks.ToListAsync();
             if (decksEntity.Count == 0) return null;
 
             foreach (var deckEntity in decksEntity)
             {
-                deckEntity.Deck = _context.Cards.Where(card => card.DeckId == deckEntity.Id).OrderByDescending(card => card.SequenceNumber).ToArray();
+                deckEntity.Deck = await _context.Cards.Where(card => card.DeckId == deckEntity.Id).OrderByDescending(card => card.SequenceNumber).ToArrayAsync();
             }
 
             var decksResponse = new List<Deck>();
@@ -74,26 +78,32 @@ namespace Tyche.DataAccess.MsSql.Repository
             return decksResponse.ToArray();
         }
 
-        public void Delete(string name)
+        public async Task<bool> DeleteAsync(string name)
         {
-            var deck = _context.Decks.FirstOrDefault(deck => deck.Name == name);
+            var deck = await _context.Decks.FirstOrDefaultAsync(deck => deck.Name == name);
+            if (deck == null) return false;
+
             _context.Decks.Remove(deck);
 
-            var cardsEntity = _context.Cards.Where(card => card.DeckId == deck.Id).ToArray();
+            var cardsEntity = await _context.Cards.Where(card => card.DeckId == deck.Id).ToArrayAsync();
+            if (cardsEntity == null) return false;
+
             _context.Cards.RemoveRange(cardsEntity);
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+            return true;
         }
 
-        public void DeleteDecks()
+        public async Task<bool> DeleteDecksAsync()
         {
             var decksEntity = _context.Decks.ToList();
-            if (decksEntity.Count == 0) return;
+            if (decksEntity.Count == 0) return false;
 
             foreach (var deckEntity in decksEntity)
             {
-                Delete(deckEntity.Name);
+                await DeleteAsync(deckEntity.Name);
             }
+            return true;
         }
     }
 }

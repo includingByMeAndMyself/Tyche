@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Tyche.BusinessLogic.Infrasturcure;
 using Tyche.Domain.Interfaces;
 using Tyche.Domain.Models;
@@ -13,25 +14,28 @@ namespace Tyche.BusinessLogic.Services
         private const int ASCENDING_ORDER = 2;
 
         private readonly IDeckRepository _deckRepository;
-        private readonly CardShuffler _cardShuffler = new CardShuffler();
+        private readonly CardShuffler _cardShuffler = new();
 
         public DeckService(IDeckRepository deckRepository)
         {
             _deckRepository = deckRepository;
         }
 
-        public string CreateNamedDeck(string name, DeckType deckType)
+        public async Task<string> CreateNamedDeckAsync(string name, DeckType deckType)
         {
             try
             {
-                var existingDeck = GetDeckByName(name);
+                var existingDeck = await GetDeckByNameAsync(name);
                 if (existingDeck != null) return $"Deck this name {name} already exists";
 
                 var cards = GetCardsArray(deckType);
                 var deck = new Deck(cards, name);
 
-                _deckRepository.Add(deck, name);
-                return "Success created";
+                var isCreate = await _deckRepository.AddAsync(deck, name);
+                if (isCreate)
+                    return "Success created";
+                else
+                    return "Deck not created";
             }
             catch (Exception ex)
             {
@@ -39,30 +43,30 @@ namespace Tyche.BusinessLogic.Services
             }
         }
 
-        public Deck GetDeckByName(string name)
+        public async Task<Deck> GetDeckByNameAsync(string name)
         {
-            var deck = _deckRepository.GetDeck(name);
+            var deck = await _deckRepository.GetDeckAsync(name);
             return deck;
         }
 
-        public string[] GetCreatedDecksNames()
+        public async Task<string[]> GetCreatedDecksNamesAsync()
         {
-            return _deckRepository.GetDecksNames();
+            return await _deckRepository.GetDecksNamesAsync();
         }
 
-        public Deck[] GetDecks()
+        public async Task<Deck[]> GetDecksAsync()
         {
-            return _deckRepository.GetDecks();
+            return await _deckRepository.GetDecksAsync();
         }
 
-        public string DeleteDeckByName(string name)
+        public async Task<string> DeleteDeckByNameAsync(string name)
         {
             try
             {
-                var existingDeck = GetDeckByName(name);
+                var existingDeck = await GetDeckByNameAsync(name);
                 if (existingDeck != null)
                 {
-                    _deckRepository.Delete(name);
+                    await _deckRepository.DeleteAsync(name);
                     return "Success deleted";
                 }
                 else
@@ -74,32 +78,32 @@ namespace Tyche.BusinessLogic.Services
             }
         }
 
-        public string DeleteDecks()
+        public async Task<string> DeleteDecksAsync()
         {
-            var decks = _deckRepository.GetDecks();
+            var decks = await _deckRepository.GetDecksAsync();
             if (decks == null) return "Decks was not created";
 
-            _deckRepository.DeleteDecks();
+            await _deckRepository.DeleteDecksAsync();
             return "Success deleted";
         }
 
-        public string ShuffleDeckBySuit(int sortOption, string name)
+        public async Task<string> ShuffleDeckByNameAsync(int sortOption, string name)
         {
-            var existingDeck = GetDeckByName(name);
+            var existingDeck = await GetDeckByNameAsync(name);
 
             if (existingDeck != null)
             {
                 switch (sortOption)
                 {
                     case SIMPLE_SHUFFLING:
-                        UpdateDeck(name, _cardShuffler.SimpleShuffle(existingDeck));
+                        await UpdateDeckAsync(name, _cardShuffler.SimpleShuffle(existingDeck));
                         break;
                     case ASCENDING_ORDER:
-                        DeleteDeckByName(name);
-                        CreateNamedDeck(name, (DeckType)existingDeck.Count);
+                        await DeleteDeckByNameAsync(name);
+                        await CreateNamedDeckAsync(name, (DeckType)existingDeck.Count);
                         break;
                     default:
-                        UpdateDeck(name, _cardShuffler.SimpleShuffle(existingDeck));
+                        await UpdateDeckAsync(name, _cardShuffler.SimpleShuffle(existingDeck));
                         break;
                 }
                 return "Successfully shuffled";
@@ -108,13 +112,13 @@ namespace Tyche.BusinessLogic.Services
                 return "This decks was not created";
         }
 
-        private void UpdateDeck(string name, Deck deck)
+        private async Task UpdateDeckAsync(string name, Deck deck)
         {
-            DeleteDeckByName(name);
-            _deckRepository.Add(deck, name);
+            await DeleteDeckByNameAsync(name);
+            await _deckRepository.AddAsync(deck, name);
         }
 
-        private Card[] GetCardsArray(DeckType deckType)
+        private static Card[] GetCardsArray(DeckType deckType)
         {
             var cards = new List<Card>();
             var sequenceNumber = 1;

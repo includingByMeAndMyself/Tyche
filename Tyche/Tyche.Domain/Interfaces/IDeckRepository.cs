@@ -1,20 +1,21 @@
 ﻿
+using System.Threading.Tasks;
 using Tyche.Domain.Models;
 
 namespace Tyche.Domain.Interfaces
 {
     public interface IDeckRepository
     {
-        void Add(Deck deck, string name);
+        Task<bool> AddAsync(Deck deck, string name);
 
-        void Delete(string name);
-
-        Deck GetDeck(string name);
-
-        Deck[] GetDecks();
-
-        string[] GetDecksNames();
+        Task<Deck> GetDeckAsync(string name);
         
-        void DeleteDecks();
+        Task<bool> DeleteAsync(string name);
+
+        Task<Deck[]>  GetDecksAsync();
+
+        Task<string[]>  GetDecksNamesAsync();
+
+        Task<bool> DeleteDecksAsync();
     }
 }
