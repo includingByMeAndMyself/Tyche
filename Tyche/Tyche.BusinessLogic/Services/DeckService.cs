@@ -83,18 +83,23 @@ namespace Tyche.BusinessLogic.Services
             return "Success deleted";
         }
 
-        public string ShuffleDeckBySuit(int sortOption)
+        public string ShuffleDeckBySuit(int sortOption, string name)
         {
-            var existingDecks = GetDecks();
-            if (existingDecks != null)
+            var existingDeck = GetDeckByName(name);
+
+            if (existingDeck != null)
             {
                 switch (sortOption)
                 {
                     case SIMPLE_SHUFFLING:
+                        UpdateDeck(name, _cardShuffler.SimpleShuffle(existingDeck));
                         break;
                     case ASCENDING_ORDER:
+                        DeleteDeckByName(name);
+                        CreateNamedDeck(name, (DeckType)existingDeck.Count);
                         break;
                     default:
+                        UpdateDeck(name, _cardShuffler.SimpleShuffle(existingDeck));
                         break;
                 }
                 return "Successfully shuffled";
@@ -103,9 +108,10 @@ namespace Tyche.BusinessLogic.Services
                 return "This decks was not created";
         }
 
-        private void UpdateDeck(Suit suit, Deck deck)
+        private void UpdateDeck(string name, Deck deck)
         {
-
+            DeleteDeckByName(name);
+            _deckRepository.Add(deck, name);
         }
 
         private Card[] GetCardsArray(DeckType deckType)

@@ -15,7 +15,7 @@ namespace Tyche.Domain.Interfaces
 
         string DeleteDeckByName(string name);
 
-        string ShuffleDeckBySuit(int sortOption);
+        string ShuffleDeckBySuit(int sortOption, string name);
 
         string DeleteDecks();
     }

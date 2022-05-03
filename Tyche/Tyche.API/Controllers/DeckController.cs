@@ -127,11 +127,11 @@ namespace Tyche.API.Controllers
         /// </summary>
         /// <param SortOption="request"></param>
         /// <returns></returns>
-        //[HttpPut("Shuffle/")]
-        //public IActionResult Update(ShuffleRequest request)
-        //{
-        //    var response = _deckService.ShuffleDeckBySuit(request.SortOption);
-        //    return Ok(response);
-        //}
+        [HttpPut("Shuffle/")]
+        public IActionResult Update(ShuffleRequest request)
+        {
+            var response = _deckService.ShuffleDeckBySuit(request.SortOption, request.Name);
+            return Ok(response);
+        }
     }
 }

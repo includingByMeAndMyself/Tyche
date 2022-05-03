@@ -10,30 +10,21 @@ namespace Tyche.BusinessLogic.Infrasturcure
     {
         protected static Random _random = new Random();
 
-        //public Deck SimpleShuffle(Deck[] decks)
-        //{
-        //    var count = 0;
+        public Deck SimpleShuffle(Deck deck)
+        {
+            var sequenceNumbersRandom = Enumerable.Range(1, deck.Count + 1)
+                                            .OrderBy(n => _random.Next(1, deck.Count + 1))
+                                            .ToArray();
 
-        //    foreach (var deck in decks)
-        //    {
-        //        count+=deck.Count;
-        //    }
+            List<Card> cards = new List<Card>();
+            var count = 0;
+            foreach (var card in deck.Cards)
+            {
+                cards.Add(new Card(card.Rank, card.Suit, sequenceNumbersRandom[count]));
+                count++;
+            }
 
-        //    int[] randomRanks = Enumerable.Range(0, count)
-        //                                    .OrderBy(n => _random.Next(0, count))
-        //                                    .ToArray();
-
-        //    List<Card> cards = new List<Card>();
-
-        //    foreach (var rank in randomRanks)
-        //    {
-        //        if (Enum.IsDefined(typeof(Rank), rank))
-        //        {
-        //            cards.Add(new Card((Rank)rank, suit));
-        //        }
-        //    }
-
-        //    return new Deck(cards.ToArray());
-        //}
+            return new Deck(cards.ToArray(), deck.Name);
+        }
     }
 }
