@@ -5,16 +5,18 @@ namespace Tyche.Domain.Interfaces
 {
     public interface IDeckService
     {
-        public string CreateNamedDeck(Suit suit);
+        string CreateNamedDeck(string name, DeckType deckType);
 
-        public Deck GetDeckBySuit(Suit suit);
+        Deck GetDeckByName(string name);
 
-        public Deck[] GetDecks();
+        Deck[] GetDecks();
 
-        public string[] GetCreatedDecksSuits();
+        string[] GetCreatedDecksNames();
 
-        public string DeleteDeckBySuit(Suit suit);
+        string DeleteDeckByName(string name);
 
-        public string ShuffleDeckBySuit(Suit suit, int sortOption);
+        string ShuffleDeckBySuit(int sortOption);
+
+        string DeleteDecks();
     }
 }

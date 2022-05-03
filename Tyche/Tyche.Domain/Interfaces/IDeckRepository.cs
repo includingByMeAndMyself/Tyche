@@ -5,16 +5,16 @@ namespace Tyche.Domain.Interfaces
 {
     public interface IDeckRepository
     {
-        void Add(Deck deck);
+        void Add(Deck deck, string name);
 
-        void Update(Deck deck);
+        void Delete(string name);
 
-        void Delete(Suit suit);
+        Deck GetDeck(string name);
 
-        Deck GetDeck(Suit suit);
+        Deck[] GetDecks();
 
-        Deck[] Get();
-
-        string[] GetDecksSuit();
+        string[] GetDecksNames();
+        
+        void DeleteDecks();
     }
 }

@@ -6,48 +6,47 @@ using Tyche.Domain.Models;
 
 namespace Tyche.DataAccess.MsSql.Infrastructure
 {
-    public class Automapper
+    internal class Automapper
     {
-        public DeckEntity MappingToDeckEntity(Deck deck)
+        public DeckEntity MappingToDeckEntity(Deck deck, string name)
         {
             var cards = new List<CardEntity>();
 
-            while (deck.Count > 0)
+            foreach (var card in deck.Cards)
             {
-                var card = deck.Pull();
                 var cardEntity = new CardEntity
                 {
                     Rank = card.Rank.ToString(),
-                    Suit = card.Suit.ToString()
+                    Suit = card.Suit.ToString(),
+                    SequenceNumber = card.SequenceNumber
                 };
                 cards.Add(cardEntity);
             }
 
-            var suit = deck.Suit.ToString();
-
             return new DeckEntity
             {
-                Suit = suit,
+                Name = name,
                 Deck = cards.ToArray()
             };
         }
 
-        public Deck MappingToDeck(DeckEntity deckEntity)
+        public Deck MappingToDeck(DeckEntity deckEntity, string name)
         {
             var cards = new List<Card>();
             var decks = deckEntity.Deck;
+            var sequenceNumber = 1;
 
-            foreach (var item in decks)
+            foreach (var deck in decks)
             {
-                var rank = (Rank)Enum.Parse(typeof(Rank), item.Rank);
-                var suit = (Suit)Enum.Parse(typeof(Suit), item.Suit);
-                
-                var card = new Card(rank, suit);
-                
+                var rank = (Rank)Enum.Parse(typeof(Rank), deck.Rank);
+                var suit = (Suit)Enum.Parse(typeof(Suit), deck.Suit);
+
+                var card = new Card(rank, suit, deck.SequenceNumber);
+                sequenceNumber++;
                 cards.Add(card);
             }
 
-            return new Deck(cards.ToArray());
+            return new Deck(cards.ToArray(), name);
         }
     }
 }

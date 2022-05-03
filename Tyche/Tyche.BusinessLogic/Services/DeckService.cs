@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Tyche.BusinessLogic.Infrasturcure;
 using Tyche.Domain.Interfaces;
 using Tyche.Domain.Models;
 
@@ -8,32 +9,28 @@ namespace Tyche.BusinessLogic.Services
 {
     public class DeckService : IDeckService
     {
+        private const int SIMPLE_SHUFFLING = 1;
+        private const int ASCENDING_ORDER = 2;
+
         private readonly IDeckRepository _deckRepository;
+        private readonly CardShuffler _cardShuffler = new CardShuffler();
 
         public DeckService(IDeckRepository deckRepository)
         {
             _deckRepository = deckRepository;
         }
 
-        public string CreateNamedDeck(Suit suit)
+        public string CreateNamedDeck(string name, DeckType deckType)
         {
             try
             {
-                var existingDecks = GetCreatedDecksSuits();
-                
-                if (existingDecks.Length != 0)
-                {
-                    foreach (var existingSuit in existingDecks)
-                    {
-                        if (existingSuit == suit.ToString())
-                            return "Deck already exists";
-                    }
-                }
+                var existingDeck = GetDeckByName(name);
+                if (existingDeck != null) return $"Deck this name {name} already exists";
 
-                var cards = GetCardsArray(suit);
-                var deck = new Deck(cards);
+                var cards = GetCardsArray(deckType);
+                var deck = new Deck(cards, name);
 
-                _deckRepository.Add(deck);
+                _deckRepository.Add(deck, name);
                 return "Success created";
             }
             catch (Exception ex)
@@ -42,47 +39,95 @@ namespace Tyche.BusinessLogic.Services
             }
         }
 
-        public Deck GetDeckBySuit(Suit suit)
+        public Deck GetDeckByName(string name)
         {
-            var deck = _deckRepository.GetDeck(suit);
+            var deck = _deckRepository.GetDeck(name);
             return deck;
+        }
+
+        public string[] GetCreatedDecksNames()
+        {
+            return _deckRepository.GetDecksNames();
         }
 
         public Deck[] GetDecks()
         {
-            return new Deck[] { };
+            return _deckRepository.GetDecks();
         }
 
-        public string[] GetCreatedDecksSuits()
+        public string DeleteDeckByName(string name)
         {
-            return _deckRepository.GetDecksSuit();
+            try
+            {
+                var existingDeck = GetDeckByName(name);
+                if (existingDeck != null)
+                {
+                    _deckRepository.Delete(name);
+                    return "Success deleted";
+                }
+                else
+                    return "This deck was not created";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
-        public string DeleteDeckBySuit(Suit suit)
+        public string DeleteDecks()
         {
+            var decks = _deckRepository.GetDecks();
+            if (decks == null) return "Decks was not created";
+
+            _deckRepository.DeleteDecks();
             return "Success deleted";
         }
 
-        public string ShuffleDeckBySuit(Suit suit, int sortOption)
+        public string ShuffleDeckBySuit(int sortOption)
         {
-            return "Successfully shuffled";
-        }
-
-        private void Update()
-        {
-
-        }
-
-        private Card[] GetCardsArray(Suit suit)
-        {
-            List<Card> listCards = new List<Card>();
-
-            foreach (Rank rank in Enum.GetValues(typeof(Rank)))
+            var existingDecks = GetDecks();
+            if (existingDecks != null)
             {
-                listCards.Add(new Card(rank, suit));
+                switch (sortOption)
+                {
+                    case SIMPLE_SHUFFLING:
+                        break;
+                    case ASCENDING_ORDER:
+                        break;
+                    default:
+                        break;
+                }
+                return "Successfully shuffled";
             }
+            else
+                return "This decks was not created";
+        }
 
-            return listCards.ToArray();
+        private void UpdateDeck(Suit suit, Deck deck)
+        {
+
+        }
+
+        private Card[] GetCardsArray(DeckType deckType)
+        {
+            var cards = new List<Card>();
+            var sequenceNumber = 1;
+
+            foreach (Suit suit in Enum.GetValues(typeof(Suit)))
+            {
+                foreach (Rank rank in Enum.GetValues(typeof(Rank)))
+                {
+                    if (deckType == DeckType.SmalDeck)
+                    {
+                        if (rank < Rank.Six)
+                            continue;
+                    }
+
+                    cards.Add(new Card(rank, suit, sequenceNumber));
+                    sequenceNumber++;
+                }
+            }
+            return cards.ToArray();
         }
     }
 }

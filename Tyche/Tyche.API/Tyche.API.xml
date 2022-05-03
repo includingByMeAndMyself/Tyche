@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Tyche.API</name>
+    </assembly>
+    <members>
+        <member name="T:Tyche.API.Controllers.DeckController">
+            <summary>
+            Controller for creating, receiving, working with a deck of cards
+            </summary>
+        </member>
+        <member name="M:Tyche.API.Controllers.DeckController.Create(Tyche.API.Models.DeckRequest)">
+            <summary>
+            Create a named deck of cards
+            </summary>
+            <param Suit="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tyche.API.Controllers.DeckController.GetDeckBySuit(System.String)">
+            <summary>
+            Getting a deck of cards by suit
+            </summary>
+            <param Suit="suitRequest"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tyche.API.Controllers.DeckController.GetSuits">
+            <summary>
+            Get a list of deck names
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Tyche.API.Controllers.DeckController.GetDecks">
+            <summary>
+            Getting a all decks of cards
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Tyche.API.Controllers.DeckController.Delete(Tyche.API.Models.DeckRequest)">
+            <summary>
+            Deleting a deck of cards by suit
+            </summary>
+            <param Suit="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tyche.API.Controllers.DeckController.Update(Tyche.API.Models.ShuffleRequest)">
+            <summary>
+            Shuffle a named deck of cards in the selected way
+            </summary>
+            <param SuitAndSortOption="request"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

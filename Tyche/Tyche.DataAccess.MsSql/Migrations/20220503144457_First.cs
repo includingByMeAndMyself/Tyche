@@ -12,7 +12,7 @@ namespace Tyche.DataAccess.MsSql.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Suit = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -25,8 +25,9 @@ namespace Tyche.DataAccess.MsSql.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Rank = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Suit = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SequenceNumber = table.Column<int>(type: "int", nullable: false),
+                    Rank = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    Suit = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     DeckId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

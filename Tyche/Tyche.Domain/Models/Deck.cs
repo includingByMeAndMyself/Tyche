@@ -12,15 +12,16 @@ namespace Tyche.Domain.Models
 
         public int Count { get; private set; }
 
-        public Suit Suit { get; set; }
+        public string Name { get; private set; }
 
-        public Deck(Card[] cards)
+        public Deck(Card[] cards, string name)
         {
             if (cards == null || cards.Length == 0)
                 throw new ArgumentException(nameof(cards));
 
             Count = cards.Length;
             _cards = new Stack<Card>(cards);
+            Name = name;
         }
 
         public Card Pull()

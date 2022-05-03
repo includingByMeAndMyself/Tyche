@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Tyche.DataAccess.MsSql.Context;
-using Tyche.DataAccess.MsSql.Entities;
 using Tyche.DataAccess.MsSql.Infrastructure;
 using Tyche.Domain.Interfaces;
 using Tyche.Domain.Models;
@@ -19,57 +19,81 @@ namespace Tyche.DataAccess.MsSql.Repository
             _context = context;
         }
 
-        public void Add(Deck deck)
+        public void Add(Deck deck, string name)
         {
             if (deck == null) return;
 
-            var deckEntity = _automapper.MappingToDeckEntity(deck);
+            if (String.IsNullOrWhiteSpace(name)) return;
+
+            var deckEntity = _automapper.MappingToDeckEntity(deck, name);
 
             _context.Add(deckEntity);
             _context.SaveChanges();
         }
 
-        public void Delete(Suit suit)
+        public Deck GetDeck(string name)
         {
-            throw new System.NotImplementedException();
-        }
+            var deckEntity = _context.Decks.FirstOrDefault(deck => deck.Name == name);
+            if (deckEntity == null) return null;
 
-        public Deck[] Get()
-        {
-            var decksEntity = _context.Decks.ToList();
-            return new Deck[] { };
-        }
+            deckEntity.Deck = _context.Cards.Where(card => card.DeckId == deckEntity.Id).OrderByDescending(card => card.SequenceNumber).ToArray();
 
-        public Deck GetDeck(Suit suit)
-        {
-            var cardsEntity = _context.Cards.Where(x => x.Suit == suit.ToString()).ToArray();
-            if (cardsEntity.Length == 0) return null;
-
-            var deckEntity = new DeckEntity
-            {
-                Deck = cardsEntity,
-                Suit = suit.ToString()
-            };
-
-            var deck = _automapper.MappingToDeck(deckEntity);
+            var deck = _automapper.MappingToDeck(deckEntity, name);
             return deck;
         }
 
-        public string[] GetDecksSuit()
+        public string[] GetDecksNames()
         {
             var decksEntity = _context.Decks.ToList();
             var decks = new List<string>();
 
             foreach (var deck in decksEntity)
             {
-                decks.Add(deck.Suit);
+                decks.Add(deck.Name);
             }
             return decks.ToArray();
         }
 
-        public void Update(Deck deck)
+        public Deck[] GetDecks()
         {
-            throw new System.NotImplementedException();
+            var decksEntity = _context.Decks.ToList();
+            if (decksEntity.Count == 0) return null;
+
+            foreach (var deckEntity in decksEntity)
+            {
+                deckEntity.Deck = _context.Cards.Where(card => card.DeckId == deckEntity.Id).OrderByDescending(card => card.SequenceNumber).ToArray();
+            }
+
+            var decksResponse = new List<Deck>();
+
+            foreach (var deck in decksEntity)
+            {
+                decksResponse.Add(_automapper.MappingToDeck(deck, deck.Name));
+            }
+
+            return decksResponse.ToArray();
+        }
+
+        public void Delete(string name)
+        {
+            var deck = _context.Decks.FirstOrDefault(deck => deck.Name == name);
+            _context.Decks.Remove(deck);
+
+            var cardsEntity = _context.Cards.Where(card => card.DeckId == deck.Id).ToArray();
+            _context.Cards.RemoveRange(cardsEntity);
+
+            _context.SaveChanges();
+        }
+
+        public void DeleteDecks()
+        {
+            var decksEntity = _context.Decks.ToList();
+            if (decksEntity.Count == 0) return;
+
+            foreach (var deckEntity in decksEntity)
+            {
+                Delete(deckEntity.Name);
+            }
         }
     }
 }

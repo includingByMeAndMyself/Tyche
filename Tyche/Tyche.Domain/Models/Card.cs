@@ -3,19 +3,17 @@ namespace Tyche.Domain.Models
 {
     public class Card
     {
+        public int SequenceNumber { get; }
+
         public Rank Rank { get; }
 
         public Suit Suit { get; }
 
-        public Card(Rank rank, Suit suit)
+        public Card(Rank rank, Suit suit, int sequenceNumber)
         {
             Rank = rank;
             Suit = suit;
-        }
-
-        public override string ToString()
-        {
-            return $"{Rank.ToString()};{Suit.ToString()}";
+            SequenceNumber = sequenceNumber;
         }
     }
 }
