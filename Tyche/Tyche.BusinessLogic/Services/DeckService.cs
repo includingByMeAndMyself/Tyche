@@ -26,7 +26,7 @@ namespace Tyche.BusinessLogic.Services
             try
             {
                 var existingDeck = await GetDeckByNameAsync(name);
-                if (existingDeck != null) return $"Deck this name {name} already exists";
+                if (existingDeck != null) return $"Deck whit this name {name} already exists";
 
                 var cards = GetCardsArray(deckType);
                 var deck = new Deck(cards, name);

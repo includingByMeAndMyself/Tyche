@@ -8,10 +8,10 @@ namespace Client.CLI
         static void Main(string[] args)
         {
             var httpClient = new HttpClient();
-            var baseCafeUri = new Uri("http://localhost:5001");
-            var cafeHttpClient = new DeckHttpClient(httpClient, baseCafeUri);
+            var baseCafeUri = new Uri("https://localhost:5001");
+            var deckHttpClient = new DeckHttpClient(httpClient, baseCafeUri);
 
-            var application = new Client(cafeHttpClient);
+            var application = new Client(deckHttpClient);
             application.Start();
         }
     }

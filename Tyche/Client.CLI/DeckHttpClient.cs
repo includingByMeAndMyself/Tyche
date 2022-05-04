@@ -1,7 +1,12 @@
 ﻿using Client.CLI.Interfaces;
 using Client.CLI.Models;
+using Microsoft.AspNet.SignalR.Client.Infrastructure;
+using Newtonsoft.Json;
 using System;
+using System.IO;
+using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 
@@ -17,9 +22,30 @@ namespace Client.CLI
             _client.BaseAddress = baseUri;
         }
 
-        public Task<string> CreateNamedDeckAsync(string name, DeckType deckType)
+        public async Task<string> CreateNamedDeckAsync(string name, DeckType deckType)
         {
-            throw new NotImplementedException();
+            var request = new DeckRequestDto
+            {
+                Name = name,
+                DeckType = deckType
+            };
+
+            var url = _client.BaseAddress.ToString() + "Deck";
+
+            var data = JsonConvert.SerializeObject(request);
+            var content = new StringContent(data, Encoding.UTF8, "application/json");
+
+            try
+            {
+                var response = await _client.PostAsync(url, content);
+
+                var responseBody = await response.Content.ReadAsStringAsync();
+                return responseBody;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
         public Task<string> DeleteDeckByNameAsync(string name)

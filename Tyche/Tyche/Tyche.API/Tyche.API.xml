@@ -31,13 +31,13 @@
         </member>
         <member name="M:Tyche.API.Controllers.DeckController.GetDecks">
             <summary>
-            Getting a all decks of cards
+            Getting all decks of cards
             </summary>
             <returns></returns>
         </member>
         <member name="M:Tyche.API.Controllers.DeckController.Delete(System.String)">
             <summary>
-            Deleting a deck of cards by name
+            Deleting deck of cards by name
             </summary>
             <returns></returns>
         </member>
