@@ -9,13 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tyche.Domain", "Tyche.Domai
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tyche.BusinessLogic", "Tyche.BusinessLogic\Tyche.BusinessLogic.csproj", "{5FC62F53-A220-4483-A965-12B214712FF8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tyche.UnitTests", "Tyche.UnitTests\Tyche.UnitTests.csproj", "{80151682-6D95-4A4F-8D30-C370E9FEC971}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tyche.IntegrationTests", "Tyche.IntegrationTests\Tyche.IntegrationTests.csproj", "{45CEE789-234D-4ED9-A11C-8876D4C5DDB5}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tyche.DataAccess.MsSql", "Tyche.DataAccess.MsSql\Tyche.DataAccess.MsSql.csproj", "{DF99F54A-0C13-47AC-BF39-06183CD40417}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.CLI", "Client.CLI\Client.CLI.csproj", "{146160C3-F8F7-4A03-A3DE-AD7A396EC808}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client.CLI", "Client.CLI\Client.CLI.csproj", "{146160C3-F8F7-4A03-A3DE-AD7A396EC808}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tyche.UnitTests", "Tyche.UnitTests\Tyche.UnitTests.csproj", "{8609CFE9-D770-45CF-B692-AF12A9BD5E85}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,14 +33,6 @@ Global
 		{5FC62F53-A220-4483-A965-12B214712FF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FC62F53-A220-4483-A965-12B214712FF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FC62F53-A220-4483-A965-12B214712FF8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{80151682-6D95-4A4F-8D30-C370E9FEC971}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{80151682-6D95-4A4F-8D30-C370E9FEC971}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{80151682-6D95-4A4F-8D30-C370E9FEC971}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{80151682-6D95-4A4F-8D30-C370E9FEC971}.Release|Any CPU.Build.0 = Release|Any CPU
-		{45CEE789-234D-4ED9-A11C-8876D4C5DDB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{45CEE789-234D-4ED9-A11C-8876D4C5DDB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{45CEE789-234D-4ED9-A11C-8876D4C5DDB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{45CEE789-234D-4ED9-A11C-8876D4C5DDB5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DF99F54A-0C13-47AC-BF39-06183CD40417}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DF99F54A-0C13-47AC-BF39-06183CD40417}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF99F54A-0C13-47AC-BF39-06183CD40417}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -51,6 +41,10 @@ Global
 		{146160C3-F8F7-4A03-A3DE-AD7A396EC808}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{146160C3-F8F7-4A03-A3DE-AD7A396EC808}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{146160C3-F8F7-4A03-A3DE-AD7A396EC808}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8609CFE9-D770-45CF-B692-AF12A9BD5E85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8609CFE9-D770-45CF-B692-AF12A9BD5E85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8609CFE9-D770-45CF-B692-AF12A9BD5E85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8609CFE9-D770-45CF-B692-AF12A9BD5E85}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
