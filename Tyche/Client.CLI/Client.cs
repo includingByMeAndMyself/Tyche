@@ -20,7 +20,7 @@ namespace Client.CLI
 
         internal void Start()
         {
-            Console.Title= "Tyche";
+            Console.Title= "Tyche Client";
             Console.WriteLine("Client started");
 
             var isUserContinue = true;
@@ -81,10 +81,8 @@ namespace Client.CLI
 
         public void CreateNamedDeckAsync()
         {
-            Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write("\tEnter Decks name: ");
-            Console.ResetColor();
+            var mesg = "\tEnter Decks name: ";
+            PrintLineGreen(mesg);
 
             var name = Console.ReadLine();
 
@@ -114,9 +112,8 @@ namespace Client.CLI
 
             if(response.Result != null)
             {
-                Console.ForegroundColor= ConsoleColor.Green;
-                Console.WriteLine("\r\n\tNames of deck(s):");
-                Console.ResetColor();
+                var mesg = "\r\n\tNames of deck(s):";
+                PrintGreen(mesg);
 
                 foreach (var name in response.Result)
                 {
@@ -132,10 +129,8 @@ namespace Client.CLI
 
         public void GetDeckByNameAsync()
         {
-            Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write("\tEnter Decks name: ");
-            Console.ResetColor();
+            var mesg = "\tEnter Decks name: ";
+            PrintLineGreen(mesg);
 
             var name = Console.ReadLine();
 
@@ -152,7 +147,6 @@ namespace Client.CLI
 
         public void GetDecksAsync()
         {
-
             var response = _deckHttpClient.GetDecksAsync();
 
             if (response.Result != null)
@@ -170,11 +164,8 @@ namespace Client.CLI
 
         public void DeleteDeckByNameAsync()
         {
-            Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write("\tEnter Decks name: ");
-            Console.ResetColor();
-
+            var mesg = "\tEnter Decks name: ";
+            PrintLineGreen(mesg);
             var name = Console.ReadLine();
 
             var response = _deckHttpClient.DeleteDeckByNameAsync(name);
@@ -186,18 +177,8 @@ namespace Client.CLI
         public void DeleteDecksAsync()
         {
             var response = _deckHttpClient.DeleteDecksAsync();
-
             if (response.Result != null)
                 Console.WriteLine("\r\n\t" + response.Result);
-        }
-
-        private static void PrintLine()
-        {
-            Console.WriteLine();
-            Console.BackgroundColor = ConsoleColor.Cyan;
-            Console.WriteLine(new string(' ', WIDTH_CONSOLE));
-            Console.ResetColor();
-            Console.WriteLine();
         }
 
         public void ShuffleDeckByNameAsync()
@@ -224,6 +205,30 @@ namespace Client.CLI
 
             if (response.Result != null)
                 Console.WriteLine("\r\n\t" + response.Result);
+        }
+
+        private static void PrintLineGreen(string mesg)
+        {
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write(mesg);
+            Console.ResetColor();
+        }
+
+        private static void PrintGreen(string mesg)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("\r\n\tNames of deck(s):");
+            Console.ResetColor();
+        }
+
+        private static void PrintLine()
+        {
+            Console.WriteLine();
+            Console.BackgroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(new string(' ', WIDTH_CONSOLE));
+            Console.ResetColor();
+            Console.WriteLine();
         }
 
         private static void PrintMenu()

@@ -6,7 +6,7 @@ namespace Client.CLI.Models
 {
     public class Card
     {
-        public int SequenceNumber { get; }
+        public int SequenceNumber { get; private set; }
 
         public ConsoleColor Color { get; private set; }
 
@@ -56,9 +56,14 @@ namespace Client.CLI.Models
 
             string rank = Rank.GetDisplayName();
 
-            string output = $"[{UnicodeSign}{rank}]";
+            string output = $"{UnicodeSign}{rank}";
 
-            Console.WriteLine("\t"+output);
+            if (output.Length < 9)
+            {
+                output = String.Concat(output, new string(' ', 9 - output.Length));
+            }
+
+            Console.WriteLine($"\t[{output}]");
         }
 
         public override string ToString()
