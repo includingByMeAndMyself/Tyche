@@ -26,5 +26,26 @@ namespace Client.CLI.Infrastructure
             }
             return DeckType.SmalDeck;
         }
+
+        public static ShuffleOption ToShuffleOption(this string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return ShuffleOption.InOrder;
+
+            if (int.TryParse(value, out var res))
+            {
+                if (res == 1)
+                {
+                    Enum.TryParse(value, out ShuffleOption simpleShuffle);
+                    return simpleShuffle;
+                }
+                else if (res == 2)
+                {
+                    Enum.TryParse(value, out ShuffleOption inOrder);
+                    return inOrder;
+                }
+            }
+            return ShuffleOption.InOrder;
+        }
     }
 }

@@ -57,12 +57,8 @@ namespace Client.CLI.Models
             string rank = Rank.GetDisplayName();
 
             string output = $"[{UnicodeSign}{rank}]";
-            if (output.Length < 9)
-            {
-                output = String.Concat(output, new string(' ', 9 - output.Length));
-            }
 
-            Console.Write(output);
+            Console.WriteLine("\t"+output);
         }
 
         public override string ToString()

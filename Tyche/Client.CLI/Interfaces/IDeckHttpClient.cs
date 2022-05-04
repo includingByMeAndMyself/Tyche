@@ -1,5 +1,4 @@
 ﻿using Client.CLI.Models;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 
@@ -17,7 +16,7 @@ namespace Client.CLI.Interfaces
 
         Task<string> DeleteDeckByNameAsync(string name);
 
-        Task<string> ShuffleDeckByNameAsync(int sortOption, string name);
+        Task<string> ShuffleDeckByNameAsync(ShuffleOption shuffleRequest, string name);
 
         Task<string> DeleteDecksAsync();
 

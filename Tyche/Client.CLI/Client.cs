@@ -1,8 +1,6 @@
 ﻿using Client.CLI.Infrastructure;
 using Client.CLI.Interfaces;
-using Client.CLI.Models;
 using System;
-using System.Linq;
 
 
 namespace Client.CLI
@@ -11,14 +9,18 @@ namespace Client.CLI
     {
         private IDeckHttpClient _deckHttpClient;
         private const int WIDTH_CONSOLE = 120;
+        private const int HIGHT_CONSOLE = 30;
 
         public Client(IDeckHttpClient deckHttpClient)
         {
             _deckHttpClient = deckHttpClient;
+            Console.SetWindowSize(WIDTH_CONSOLE, HIGHT_CONSOLE);
+
         }
 
         internal void Start()
         {
+            Console.Title= "Tyche";
             Console.WriteLine("Client started");
 
             var isUserContinue = true;
@@ -44,16 +46,22 @@ namespace Client.CLI
                         CreateNamedDeckAsync();
                         break;
                     case "2":
+                        GetDeckByNameAsync();
                         break;
                     case "3":
+                        GetCreatedDecksNamesAsync();
                         break;
                     case "4":
+                        GetDecksAsync();
                         break;
                     case "5":
+                        DeleteDecksAsync();
                         break;
                     case "6":
+                        DeleteDeckByNameAsync();
                         break;
                     case "7":
+                        ShuffleDeckByNameAsync();
                         break;
                     case "8":
                         break;
@@ -74,7 +82,9 @@ namespace Client.CLI
         public void CreateNamedDeckAsync()
         {
             Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("\tEnter Decks name: ");
+            Console.ResetColor();
 
             var name = Console.ReadLine();
 
@@ -83,23 +93,137 @@ namespace Client.CLI
             Console.WriteLine("\tDecks Type:" +
                 "\r\n\t\"52\" if you want create StandartDeck = 52 cards " +
                 "\r\n\t\"36\" if you want create SmallDeck = 36 cards");
-            Console.ResetColor();
             Console.Write("\r\n\tEnter Decks Type: ");
+            Console.ResetColor();
             var type = Console.ReadLine();
             
             var deckType = type.ToDeckType();
 
             var response = _deckHttpClient.CreateNamedDeckAsync(name, deckType);
-            Console.WriteLine("\r\n\t" + response.Result);
+
+            if(response.Result != null)
+                Console.WriteLine("\r\n\t" + response.Result);
+        }
+
+        public void GetCreatedDecksNamesAsync()
+        {
+            Console.WriteLine();
+
+            var response = _deckHttpClient.GetCreatedDecksNamesAsync();
+            var count = 1;
+
+            if(response.Result != null)
+            {
+                Console.ForegroundColor= ConsoleColor.Green;
+                Console.WriteLine("\r\n\tNames of deck(s):");
+                Console.ResetColor();
+
+                foreach (var name in response.Result)
+                {
+                    Console.WriteLine($"\r\n\t{count}) " + name);
+                    count++;
+                }
+            }
+            else
+            {
+                Console.WriteLine("\r\n\tNo decks of cards created");
+            }
+        }
+
+        public void GetDeckByNameAsync()
+        {
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("\tEnter Decks name: ");
+            Console.ResetColor();
+
+            var name = Console.ReadLine();
+
+            var response = _deckHttpClient.GetDeckByNameAsync(name);
+            if (response.Result != null)
+            {
+                response.Result.ShowDeck();
+            }
+            else
+            {
+                Console.WriteLine($"\r\n\tNo deck of cards whit name {name} created");
+            }
+        }
+
+        public void GetDecksAsync()
+        {
+
+            var response = _deckHttpClient.GetDecksAsync();
+
+            if (response.Result != null)
+            {
+                foreach (var deck in response.Result)
+                {
+                    deck.ShowDeck();
+                } 
+            }
+            else
+            {
+                Console.WriteLine($"\r\n\tHave no decks of cards");
+            }
+        }
+
+        public void DeleteDeckByNameAsync()
+        {
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("\tEnter Decks name: ");
+            Console.ResetColor();
+
+            var name = Console.ReadLine();
+
+            var response = _deckHttpClient.DeleteDeckByNameAsync(name);
+
+            if (response.Result != null)
+                Console.WriteLine("\r\n\t" + response.Result);
+        }
+
+        public void DeleteDecksAsync()
+        {
+            var response = _deckHttpClient.DeleteDecksAsync();
+
+            if (response.Result != null)
+                Console.WriteLine("\r\n\t" + response.Result);
         }
 
         private static void PrintLine()
         {
             Console.WriteLine();
             Console.BackgroundColor = ConsoleColor.Cyan;
-            Console.WriteLine(new string('_', WIDTH_CONSOLE));
+            Console.WriteLine(new string(' ', WIDTH_CONSOLE));
             Console.ResetColor();
             Console.WriteLine();
+        }
+
+        public void ShuffleDeckByNameAsync()
+        {
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("\tEnter Decks name: ");
+            Console.ResetColor();
+
+            var name = Console.ReadLine();
+
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("\tShuffle Option:" +
+                "\r\n\t\"1\" if you want to shuffle a deck of cards" +
+                "\r\n\t\"2\" if you want to shuffle the deck of cards in order");
+            Console.Write("\r\n\tEnter Shuffle Option: ");
+            Console.ResetColor();
+            var type = Console.ReadLine();
+
+            var shuffleType = type.ToShuffleOption();
+
+            var response = _deckHttpClient.ShuffleDeckByNameAsync(shuffleType, name);
+
+            if (response.Result != null)
+                Console.WriteLine("\r\n\t" + response.Result);
         }
 
         private static void PrintMenu()
@@ -107,7 +231,7 @@ namespace Client.CLI
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\t1 - Create named deck;" +
                     "\n\t2 - Getting a deck of cards by name;" +
-                    "\n\t3 - Get a list of deck names;" +
+                    "\n\t3 - Get list of deck names;" +
                     "\n\t4 - Getting all decks of cards;" +
                     "\n\t5 - Deleting all deck of cards;" +
                     "\n\t6 - Deleting deck of cards by name;" +

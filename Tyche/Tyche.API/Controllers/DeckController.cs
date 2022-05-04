@@ -48,7 +48,7 @@ namespace Tyche.API.Controllers
         /// </summary>
         /// <param Name="name"></param>
         /// <returns></returns>
-        [HttpGet("{name}")]
+        [HttpGet("DeckByName/{name}")]
         public async Task<ActionResult<DeckResponse>>  GetDeckByName(string name)
         {
 
@@ -104,7 +104,7 @@ namespace Tyche.API.Controllers
         /// Deleting deck of cards by name
         /// </summary>
         /// <returns></returns>
-        [HttpDelete("ByNames/")]
+        [HttpDelete("DeckByName/{name}")]
         public async Task<IActionResult> Delete(string name)
         {
             var response = await _deckService.DeleteDeckByNameAsync(name);
@@ -126,12 +126,12 @@ namespace Tyche.API.Controllers
         /// <summary>
         /// Shuffle dekcs of cards in the selected way
         /// </summary>
-        /// <param SortOption="request"></param>
+        /// <param ShuffleOption="request"></param>
         /// <returns></returns>
         [HttpPut("Shuffle/")]
         public async Task<IActionResult> Update(ShuffleRequest request)
         {
-            var response = await _deckService.ShuffleDeckByNameAsync(request.SortOption, request.Name);
+            var response = await _deckService.ShuffleDeckByNameAsync(request.ShuffleOption, request.Name);
             return Ok(response);
         }
     }

@@ -52,7 +52,7 @@
             <summary>
             Shuffle dekcs of cards in the selected way
             </summary>
-            <param SortOption="request"></param>
+            <param ShuffleOption="request"></param>
             <returns></returns>
         </member>
     </members>

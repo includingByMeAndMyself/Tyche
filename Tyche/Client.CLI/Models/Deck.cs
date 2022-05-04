@@ -6,6 +6,8 @@ namespace Client.CLI.Models
 {
     public class Deck
     {
+        private const int WIDTH_CONSOLE = 120;
+
         private Stack<Card> _cards;
 
         public Stack<Card> Cards { get { return _cards; } }
@@ -32,15 +34,28 @@ namespace Client.CLI.Models
 
         public virtual void ShowDeck()
         {
-            Console.WriteLine(new string('-', 115));
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("\r\n\tDeck name: ");
+            Console.ResetColor();
+            Console.WriteLine(Name + "\r\n");
 
-            while(Cards.Count > 0)
+
+            while (Cards.Count > 0)
             {
                 var card = Cards.Pop();
                 card.ShowCard();
             }
 
-            Console.WriteLine(new string('-', 115));
+            PrintLine();
+        }
+
+        private static void PrintLine()
+        {
+            Console.WriteLine();
+            Console.BackgroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(new string(' ', WIDTH_CONSOLE));
+            Console.ResetColor();
+            Console.WriteLine();
         }
     }
 }
