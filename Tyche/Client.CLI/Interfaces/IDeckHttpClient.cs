@@ -1,10 +1,10 @@
-﻿using System.Threading.Tasks;
-using Tyche.Domain.Models;
+﻿using Client.CLI.Models;
+using System.Threading.Tasks;
 
 
-namespace Tyche.Domain.Interfaces
+namespace Client.CLI.Interfaces
 {
-    public interface IDeckService
+    public interface IDeckHttpClient
     {
         Task<string> CreateNamedDeckAsync(string name, DeckType deckType);
 
@@ -16,8 +16,9 @@ namespace Tyche.Domain.Interfaces
 
         Task<string> DeleteDeckByNameAsync(string name);
 
-        Task<string> ShuffleDeckByNameAsync(int sortOption, string name);
+        Task<string> ShuffleDeckByNameAsync(ShuffleOption shuffleRequest, string name);
 
         Task<string> DeleteDecksAsync();
+
     }
 }

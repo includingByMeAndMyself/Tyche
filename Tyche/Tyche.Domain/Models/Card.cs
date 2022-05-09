@@ -3,10 +3,17 @@ namespace Tyche.Domain.Models
 {
     public class Card
     {
-        public int Id { get; set; }
+        public int SequenceNumber { get; }
 
-        public Rank Rank { get; set; }
+        public Rank Rank { get; }
 
-        public Suit Suit { get; set; }
+        public Suit Suit { get; }
+
+        public Card(Rank rank, Suit suit, int sequenceNumber)
+        {
+            Rank = rank;
+            Suit = suit;
+            SequenceNumber = sequenceNumber;
+        }
     }
 }

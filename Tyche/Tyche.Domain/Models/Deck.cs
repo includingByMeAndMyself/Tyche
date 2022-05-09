@@ -8,20 +8,25 @@ namespace Tyche.Domain.Models
     {
         private Stack<Card> _cards;
 
-        public int Id { get; set; }
+        public Stack<Card> Cards { get { return _cards; } }
 
-        public Suit Name { get; set; }
+        public int Count { get; private set; }
 
-        public Deck(Card[] cards)
+        public string Name { get; private set; }
+
+        public Deck(Card[] cards, string name)
         {
             if (cards == null || cards.Length == 0)
                 throw new ArgumentException(nameof(cards));
 
+            Count = cards.Length;
             _cards = new Stack<Card>(cards);
+            Name = name;
         }
 
         public Card Pull()
         {
+            Count = _cards.Count - 1;
             return _cards.Pop();
         }
     }
