@@ -1,4 +1,4 @@
-﻿
+﻿Ы
 using System.ComponentModel.DataAnnotations;
 
 namespace Tyche.DataAccess.MsSql.Entities
